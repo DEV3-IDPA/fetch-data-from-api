@@ -26,11 +26,11 @@ const MoviesScreen = ({ navigation }) => {
   }
 
   useEffect(() => {
-    getMoviesByRating();//laad upcomming movies wanneer het scherm laadt
+    getMoviesByRating();//load upcomming movies when the screen loads
   }, []);
 
-  //laad search results wanneer je in textinput typt
-  const getMoviesByTitleSearch = async (enteredText) => {//argument meegegeven door onChangeText
+  //load search results while typing in text input
+  const getMoviesByTitleSearch = async (enteredText) => {//argument provided by onChangeText (TextInput)
     try {
       if (enteredText.length > 3) {
         const url = encodeURI("https://moviesminidatabase.p.rapidapi.com/movie/imdb_id/byTitle/" + enteredText + "/");
@@ -56,17 +56,16 @@ const MoviesScreen = ({ navigation }) => {
       <TextInput
         placeholder="search movie"
         style={styles.input}
-        onChangeText={getMoviesByTitleSearch}//geeft argument enteredText mee
+        onChangeText={getMoviesByTitleSearch}//provide argument to enteredText
       />
       <FlatList
         data={movies}
-        keyExtractor={item => item.imdb_id}//gebruik imdb_id als key voor de flatlist
+        keyExtractor={item => item.imdb_id}//use imdb_id as unique-key for each MovieItem in the FlatList
         renderItem={({ item }) => (
           <MovieItem
             id={item.imdb_id}
             title={item.title}
             navigation={navigation}
-            onSelectMovie={(selectedId) => { navigation.navigate('Details', { movieId: selectedId }) }}
           />
         )}
       />
